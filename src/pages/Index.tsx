@@ -13,7 +13,7 @@ import { useAnime } from '@/hooks/useAnime';
 import { useManga } from '@/hooks/useManga';
 import { useNews } from '@/hooks/useNews';
 import { toast } from 'sonner';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   const { data: anime } = useAnime();
@@ -53,7 +53,7 @@ const Index = () => {
               <p className="text-muted-foreground">Most popular anime series right now</p>
             </div>
             <Button variant="outline" asChild>
-              <Link href="/anime">
+              <Link to="/anime">
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -81,7 +81,7 @@ const Index = () => {
               <p className="text-muted-foreground">Top rated manga series</p>
             </div>
             <Button variant="outline" asChild>
-              <Link href="/manga">
+              <Link to="/manga">
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -109,7 +109,7 @@ const Index = () => {
               <p className="text-muted-foreground">Stay updated with anime and manga news</p>
             </div>
             <Button variant="outline" asChild>
-              <Link href="/news">
+              <Link to="/news">
                 View All <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

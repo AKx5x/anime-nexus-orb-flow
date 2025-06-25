@@ -2,7 +2,7 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -15,10 +15,10 @@ const Footer = () => {
               About Us
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/about" className="hover:text-foreground transition-colors">Our Story</Link></li>
-              <li><Link href="/team" className="hover:text-foreground transition-colors">Team</Link></li>
-              <li><Link href="/careers" className="hover:text-foreground transition-colors">Careers</Link></li>
-              <li><Link href="/press" className="hover:text-foreground transition-colors">Press</Link></li>
+              <li><Link to="/about" className="hover:text-foreground transition-colors">Our Story</Link></li>
+              <li><Link to="/team" className="hover:text-foreground transition-colors">Team</Link></li>
+              <li><Link to="/careers" className="hover:text-foreground transition-colors">Careers</Link></li>
+              <li><Link to="/press" className="hover:text-foreground transition-colors">Press</Link></li>
             </ul>
           </div>
 
@@ -28,10 +28,10 @@ const Footer = () => {
               Support
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/help" className="hover:text-foreground transition-colors">Help Center</Link></li>
-              <li><Link href="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
-              <li><Link href="/feedback" className="hover:text-foreground transition-colors">Feedback</Link></li>
-              <li><Link href="/bug-report" className="hover:text-foreground transition-colors">Report a Bug</Link></li>
+              <li><Link to="/help" className="hover:text-foreground transition-colors">Help Center</Link></li>
+              <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
+              <li><Link to="/feedback" className="hover:text-foreground transition-colors">Feedback</Link></li>
+              <li><Link to="/bug-report" className="hover:text-foreground transition-colors">Report a Bug</Link></li>
             </ul>
           </div>
 
@@ -41,10 +41,10 @@ const Footer = () => {
               Legal
             </h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
-              <li><Link href="/dmca" className="hover:text-foreground transition-colors">DMCA</Link></li>
-              <li><Link href="/cookies" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
+              <li><Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
+              <li><Link to="/dmca" className="hover:text-foreground transition-colors">DMCA</Link></li>
+              <li><Link to="/cookies" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
 
@@ -70,13 +70,13 @@ const Footer = () => {
             © 2024 AnimeNexus. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="#" className="text-muted-foreground hover:text-foreground transition-colors">
               Twitter
             </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="#" className="text-muted-foreground hover:text-foreground transition-colors">
               Discord
             </Link>
-            <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="#" className="text-muted-foreground hover:text-foreground transition-colors">
               Reddit
             </Link>
           </div>

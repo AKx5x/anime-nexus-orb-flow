@@ -4,7 +4,7 @@ import { Search, Menu, User, Bell, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useTheme } from 'next-themes';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link to="/" className="flex items-center space-x-2">
           <div className="relative">
             <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
               <span className="text-white font-bold text-sm">@</span>
@@ -28,16 +28,16 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link href="/anime" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
+          <Link to="/anime" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
             Anime
           </Link>
-          <Link href="/manga" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
+          <Link to="/manga" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
             Manga
           </Link>
-          <Link href="/news" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
+          <Link to="/news" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
             News
           </Link>
-          <Link href="/community" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
+          <Link to="/community" className="text-foreground/80 hover:text-foreground transition-colors font-medium">
             Community
           </Link>
         </nav>
@@ -88,16 +88,16 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden border-t bg-background/95 backdrop-blur">
           <nav className="container px-4 py-4 space-y-2">
-            <Link href="/anime" className="block py-2 text-foreground/80 hover:text-foreground">
+            <Link to="/anime" className="block py-2 text-foreground/80 hover:text-foreground">
               Anime
             </Link>
-            <Link href="/manga" className="block py-2 text-foreground/80 hover:text-foreground">
+            <Link to="/manga" className="block py-2 text-foreground/80 hover:text-foreground">
               Manga
             </Link>
-            <Link href="/news" className="block py-2 text-foreground/80 hover:text-foreground">
+            <Link to="/news" className="block py-2 text-foreground/80 hover:text-foreground">
               News
             </Link>
-            <Link href="/community" className="block py-2 text-foreground/80 hover:text-foreground">
+            <Link to="/community" className="block py-2 text-foreground/80 hover:text-foreground">
               Community
             </Link>
             <div className="pt-2">
