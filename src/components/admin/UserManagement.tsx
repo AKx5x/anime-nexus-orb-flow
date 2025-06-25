@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { toast } from 'sonner';
 
+type UserRole = 'user' | 'moderator' | 'admin';
+
 const UserManagement = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +47,7 @@ const UserManagement = () => {
     setLoading(false);
   };
 
-  const updateUserRole = async (userId: string, newRole: string) => {
+  const updateUserRole = async (userId: string, newRole: UserRole) => {
     const { error } = await supabase
       .from('profiles')
       .update({ role: newRole })
@@ -57,6 +59,13 @@ const UserManagement = () => {
       toast.success('User role updated successfully');
       fetchUsers();
     }
+  };
+
+  const getUserRole = (role: string | null | undefined): UserRole => {
+    if (role === 'admin' || role === 'moderator' || role === 'user') {
+      return role;
+    }
+    return 'user';
   };
 
   if (loading) {
@@ -79,58 +88,62 @@ const UserManagement = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredUsers.map((user) => (
-          <Card key={user.id}>
-            <CardHeader>
-              <div className="flex items-center space-x-4">
-                <Avatar>
-                  <AvatarImage src={user.avatar_url} />
-                  <AvatarFallback>
-                    {user.display_name?.[0]?.toUpperCase() || 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <CardTitle className="text-lg">{user.display_name || 'User'}</CardTitle>
-                  <CardDescription>@{user.username}</CardDescription>
+        {filteredUsers.map((user) => {
+          const userRole = getUserRole(user.role);
+          
+          return (
+            <Card key={user.id}>
+              <CardHeader>
+                <div className="flex items-center space-x-4">
+                  <Avatar>
+                    <AvatarImage src={user.avatar_url} />
+                    <AvatarFallback>
+                      {user.display_name?.[0]?.toUpperCase() || 'U'}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <CardTitle className="text-lg">{user.display_name || 'User'}</CardTitle>
+                    <CardDescription>@{user.username}</CardDescription>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {user.bio && (
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {user.bio}
-                </p>
-              )}
-              
-              <div className="flex items-center justify-between">
-                <Badge variant={
-                  user.role === 'admin' ? 'default' : 
-                  user.role === 'moderator' ? 'secondary' : 'outline'
-                }>
-                  {user.role || 'user'}
-                </Badge>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {user.bio && (
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {user.bio}
+                  </p>
+                )}
                 
-                <Select
-                  value={user.role || 'user'}
-                  onValueChange={(value) => updateUserRole(user.id, value)}
-                >
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="user">User</SelectItem>
-                    <SelectItem value="moderator">Moderator</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="text-xs text-muted-foreground">
-                Joined: {new Date(user.created_at).toLocaleDateString()}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+                <div className="flex items-center justify-between">
+                  <Badge variant={
+                    userRole === 'admin' ? 'default' : 
+                    userRole === 'moderator' ? 'secondary' : 'outline'
+                  }>
+                    {userRole}
+                  </Badge>
+                  
+                  <Select
+                    value={userRole}
+                    onValueChange={(value: UserRole) => updateUserRole(user.id, value)}
+                  >
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="moderator">Moderator</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="text-xs text-muted-foreground">
+                  Joined: {new Date(user.created_at).toLocaleDateString()}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {filteredUsers.length === 0 && (
