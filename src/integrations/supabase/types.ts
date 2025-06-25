@@ -9,7 +9,279 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      anime: {
+        Row: {
+          banner_image: string | null
+          cover_image: string | null
+          created_at: string | null
+          episode_count: number | null
+          genres: string[] | null
+          id: string
+          rating: number | null
+          release_year: number | null
+          status: Database["public"]["Enums"]["content_status"] | null
+          studio: string | null
+          synopsis: string | null
+          title: string
+          title_english: string | null
+          title_japanese: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          banner_image?: string | null
+          cover_image?: string | null
+          created_at?: string | null
+          episode_count?: number | null
+          genres?: string[] | null
+          id?: string
+          rating?: number | null
+          release_year?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          studio?: string | null
+          synopsis?: string | null
+          title: string
+          title_english?: string | null
+          title_japanese?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          banner_image?: string | null
+          cover_image?: string | null
+          created_at?: string | null
+          episode_count?: number | null
+          genres?: string[] | null
+          id?: string
+          rating?: number | null
+          release_year?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          studio?: string | null
+          synopsis?: string | null
+          title?: string
+          title_english?: string | null
+          title_japanese?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manga: {
+        Row: {
+          artist: string | null
+          author: string | null
+          banner_image: string | null
+          chapter_count: number | null
+          cover_image: string | null
+          created_at: string | null
+          genres: string[] | null
+          id: string
+          rating: number | null
+          status: Database["public"]["Enums"]["content_status"] | null
+          synopsis: string | null
+          title: string
+          title_english: string | null
+          title_japanese: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          artist?: string | null
+          author?: string | null
+          banner_image?: string | null
+          chapter_count?: number | null
+          cover_image?: string | null
+          created_at?: string | null
+          genres?: string[] | null
+          id?: string
+          rating?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          synopsis?: string | null
+          title: string
+          title_english?: string | null
+          title_japanese?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          artist?: string | null
+          author?: string | null
+          banner_image?: string | null
+          chapter_count?: number | null
+          cover_image?: string | null
+          created_at?: string | null
+          genres?: string[] | null
+          id?: string
+          rating?: number | null
+          status?: Database["public"]["Enums"]["content_status"] | null
+          synopsis?: string | null
+          title?: string
+          title_english?: string | null
+          title_japanese?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      news: {
+        Row: {
+          author_id: string | null
+          category: Database["public"]["Enums"]["news_category"] | null
+          content: string
+          created_at: string | null
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author_id?: string | null
+          category?: Database["public"]["Enums"]["news_category"] | null
+          content: string
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string | null
+          category?: Database["public"]["Enums"]["news_category"] | null
+          content?: string
+          created_at?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "news_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          dark_mode: boolean | null
+          display_name: string | null
+          id: string
+          language: string | null
+          role: Database["public"]["Enums"]["user_role"] | null
+          updated_at: string | null
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          dark_mode?: boolean | null
+          display_name?: string | null
+          id: string
+          language?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          dark_mode?: boolean | null
+          display_name?: string | null
+          id?: string
+          language?: string | null
+          role?: Database["public"]["Enums"]["user_role"] | null
+          updated_at?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
+      user_history: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          id: string
+          last_accessed: string | null
+          last_chapter: number | null
+          last_episode: number | null
+          progress_percentage: number | null
+          user_id: string | null
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          id?: string
+          last_accessed?: string | null
+          last_chapter?: number | null
+          last_episode?: number | null
+          progress_percentage?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          id?: string
+          last_accessed?: string | null
+          last_chapter?: number | null
+          last_episode?: number | null
+          progress_percentage?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +290,9 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      content_status: "ongoing" | "completed" | "upcoming" | "cancelled"
+      news_category: "industry" | "reviews" | "trailers" | "events"
+      user_role: "user" | "moderator" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +407,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      content_status: ["ongoing", "completed", "upcoming", "cancelled"],
+      news_category: ["industry", "reviews", "trailers", "events"],
+      user_role: ["user", "moderator", "admin"],
+    },
   },
 } as const
