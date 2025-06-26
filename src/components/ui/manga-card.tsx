@@ -23,26 +23,34 @@ const MangaCard = ({ manga, onRead, onFavorite }: MangaCardProps) => {
 
   return (
     <>
-      <Card className="animeil-card group cursor-pointer h-full">
+      <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 anime-card">
         <div className="relative">
           <AspectRatio ratio={3/4}>
             <img
               src={manga.cover_image || '/placeholder.svg'}
               alt={manga.title}
-              className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
+              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
             />
           </AspectRatio>
           
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <div className="absolute bottom-3 left-3 right-3">
+          {/* Overlay on hover */}
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="flex space-x-2">
               <Button
                 size="sm"
-                className="animeil-button w-full"
+                className="anime-button"
                 onClick={handleReadClick}
               >
-                <BookOpen className="h-4 w-4 mr-2" />
-                Read Now
+                <BookOpen className="h-4 w-4 mr-1" />
+                Read
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => onFavorite?.(manga.id)}
+                className="backdrop-blur-sm bg-white/20 hover:bg-white/30"
+              >
+                <Bookmark className="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -50,9 +58,9 @@ const MangaCard = ({ manga, onRead, onFavorite }: MangaCardProps) => {
           {/* Rating badge */}
           {manga.rating && (
             <div className="absolute top-2 right-2">
-              <Badge className="animeil-badge flex items-center space-x-1">
-                <Star className="h-3 w-3 fill-current" />
-                <span>{manga.rating}</span>
+              <Badge className="bg-black/70 text-white hover:bg-black/70">
+                <Star className="h-3 w-3 mr-1 fill-yellow-400 text-yellow-400" />
+                {manga.rating}
               </Badge>
             </div>
           )}
@@ -60,47 +68,37 @@ const MangaCard = ({ manga, onRead, onFavorite }: MangaCardProps) => {
           {/* Status badge */}
           <div className="absolute top-2 left-2">
             <Badge 
-              className={`text-xs font-medium ${
-                manga.status === 'completed' 
-                  ? 'status-completed' 
-                  : manga.status === 'ongoing'
-                  ? 'status-ongoing'
-                  : 'status-upcoming'
-              }`}
+              variant={manga.status === 'completed' ? 'default' : 'secondary'}
+              className="capitalize backdrop-blur-sm"
             >
               {manga.status}
             </Badge>
           </div>
         </div>
 
-        <CardContent className="p-3">
-          <h3 className="font-semibold text-sm text-white mb-1 line-clamp-1 group-hover:text-red-400 transition-colors">
-            {manga.title}
-          </h3>
-          
+        <CardContent className="p-4">
+          <h3 className="font-semibold text-lg mb-1 line-clamp-1">{manga.title}</h3>
           {manga.title_english && manga.title_english !== manga.title && (
-            <p className="text-xs text-zinc-400 mb-2 line-clamp-1">
-              {manga.title_english}
-            </p>
+            <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{manga.title_english}</p>
           )}
           
-          <div className="flex flex-wrap gap-1 mb-2">
-            {manga.genres?.slice(0, 2).map((genre) => (
-              <Badge 
-                key={genre} 
-                className="animeil-badge-secondary text-xs"
-              >
+          <div className="flex flex-wrap gap-1 mb-3">
+            {manga.genres?.slice(0, 3).map((genre) => (
+              <Badge key={genre} variant="outline" className="text-xs">
                 {genre}
               </Badge>
             ))}
           </div>
 
-          <div className="flex justify-between items-center text-xs text-zinc-500">
+          <div className="flex justify-between items-center text-sm text-muted-foreground">
             <span>{manga.author}</span>
-            {manga.chapter_count && (
-              <span>{manga.chapter_count} ch</span>
-            )}
           </div>
+          
+          {manga.chapter_count && (
+            <p className="text-xs text-muted-foreground mt-1">
+              {manga.chapter_count} chapters
+            </p>
+          )}
         </CardContent>
       </Card>
 

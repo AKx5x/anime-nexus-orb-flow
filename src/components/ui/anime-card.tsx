@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Play, Star, Bookmark, Calendar, Eye, Clock } from 'lucide-react';
+import { Play, Star, Bookmark, Calendar, Eye } from 'lucide-react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { useNavigate } from 'react-router-dom';
 import type { Tables } from '@/integrations/supabase/types';
@@ -23,7 +23,7 @@ const AnimeCard = ({ anime, onWatch, onFavorite }: AnimeCardProps) => {
   };
 
   return (
-    <Card className="animeil-card group cursor-pointer h-full">
+    <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 anime-card">
       <div className="relative">
         <AspectRatio ratio={3/4}>
           <img
@@ -33,39 +33,48 @@ const AnimeCard = ({ anime, onWatch, onFavorite }: AnimeCardProps) => {
           />
         </AspectRatio>
         
-        {/* Overlay */}
+        {/* Enhanced overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div className="absolute bottom-3 left-3 right-3">
-            <Button
-              size="sm"
-              className="animeil-button w-full"
-              onClick={handleWatch}
-            >
-              <Play className="h-4 w-4 mr-2" />
-              Watch Now
-            </Button>
+          <div className="absolute bottom-4 left-4 right-4">
+            <div className="flex space-x-2">
+              <Button
+                size="sm"
+                className="anime-button flex-1"
+                onClick={handleWatch}
+              >
+                <Play className="h-4 w-4 mr-2" />
+                Watch Now
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => onFavorite?.(anime.id)}
+                className="backdrop-blur-sm bg-white/20 hover:bg-white/30 border-white/30"
+              >
+                <Bookmark className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
 
         {/* Rating badge */}
         {anime.rating && (
-          <div className="absolute top-2 right-2">
-            <Badge className="animeil-badge flex items-center space-x-1">
-              <Star className="h-3 w-3 fill-current" />
-              <span>{anime.rating}</span>
+          <div className="absolute top-3 right-3">
+            <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0 shadow-lg">
+              <Star className="h-3 w-3 mr-1 fill-white" />
+              {anime.rating}
             </Badge>
           </div>
         )}
 
         {/* Status badge */}
-        <div className="absolute top-2 left-2">
+        <div className="absolute top-3 left-3">
           <Badge 
-            className={`text-xs font-medium ${
+            variant={anime.status === 'completed' ? 'default' : 'secondary'}
+            className={`capitalize backdrop-blur-sm border-0 shadow-lg ${
               anime.status === 'completed' 
-                ? 'status-completed' 
-                : anime.status === 'ongoing'
-                ? 'status-ongoing'
-                : 'status-upcoming'
+                ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' 
+                : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
             }`}
           >
             {anime.status}
@@ -74,40 +83,41 @@ const AnimeCard = ({ anime, onWatch, onFavorite }: AnimeCardProps) => {
 
         {/* Episode count */}
         {anime.episode_count && (
-          <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <Badge className="animeil-badge-secondary text-xs">
+          <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <Badge className="bg-black/60 backdrop-blur-sm text-white border-white/20">
               <Eye className="h-3 w-3 mr-1" />
-              {anime.episode_count}
+              {anime.episode_count} eps
             </Badge>
           </div>
         )}
       </div>
 
-      <CardContent className="p-3">
-        <h3 className="font-semibold text-sm text-white mb-1 line-clamp-1 group-hover:text-red-400 transition-colors">
+      <CardContent className="p-5">
+        <h3 className="font-bold text-lg mb-2 line-clamp-1 text-white group-hover:text-purple-300 transition-colors">
           {anime.title}
         </h3>
         
         {anime.title_english && anime.title_english !== anime.title && (
-          <p className="text-xs text-zinc-400 mb-2 line-clamp-1">
+          <p className="text-sm text-muted-foreground mb-3 line-clamp-1">
             {anime.title_english}
           </p>
         )}
         
-        <div className="flex flex-wrap gap-1 mb-2">
-          {anime.genres?.slice(0, 2).map((genre) => (
+        <div className="flex flex-wrap gap-1 mb-4">
+          {anime.genres?.slice(0, 3).map((genre) => (
             <Badge 
               key={genre} 
-              className="animeil-badge-secondary text-xs"
+              variant="outline" 
+              className="text-xs border-purple-400/30 text-purple-300 hover:bg-purple-500/20"
             >
               {genre}
             </Badge>
           ))}
         </div>
 
-        <div className="flex justify-between items-center text-xs text-zinc-500">
-          <div className="flex items-center space-x-1">
-            {anime.studio && <span>{anime.studio}</span>}
+        <div className="flex justify-between items-center text-sm text-muted-foreground">
+          <div className="flex items-center space-x-2">
+            {anime.studio && <span className="font-medium">{anime.studio}</span>}
           </div>
           {anime.release_year && (
             <div className="flex items-center">

@@ -6,7 +6,7 @@ import MangaCard from '@/components/ui/manga-card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Search, Filter, BookOpen, Star } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { useManga } from '@/hooks/useManga';
 import { toast } from 'sonner';
 
@@ -15,7 +15,7 @@ const MangaPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
-  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Martial Arts', 'Supernatural', 'Horror'];
+  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Martial Arts'];
 
   const filteredManga = manga?.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -43,10 +43,10 @@ const MangaPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-zinc-900">
+      <div className="min-h-screen bg-background">
         <Header />
-        <div className="animeil-container py-16">
-          <div className="text-center text-red-400 text-lg">Error loading manga: {error.message}</div>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-red-500">Error loading manga: {error.message}</div>
         </div>
         <Footer />
       </div>
@@ -54,48 +54,42 @@ const MangaPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-900">
+    <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="animeil-container py-8">
+      <main className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-3 mb-4">
-            <BookOpen className="w-8 h-8 text-red-500" />
-            <h1 className="text-4xl font-bold text-white">
-              Manga Library
-            </h1>
-          </div>
-          <p className="text-zinc-400 text-lg">
-            Read thousands of manga chapters online for free
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Manga Library
+          </h1>
+          <p className="text-muted-foreground text-lg">
+            Read thousands of manga chapters online
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-8 space-y-6">
+        <div className="mb-8 space-y-4">
           <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 h-5 w-5" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
-              placeholder="Search manga titles..."
+              placeholder="Search manga..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="animeil-input pl-10"
+              className="pl-10"
             />
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <div className="flex items-center space-x-2 text-white">
-              <Filter className="h-5 w-5 text-red-500" />
-              <span className="font-medium">Genres:</span>
-            </div>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" className="mb-2">
+              <Filter className="h-4 w-4 mr-2" />
+              Genres:
+            </Button>
             {genres.map(genre => (
               <Badge
                 key={genre}
-                className={`cursor-pointer transition-all ${
-                  selectedGenres.includes(genre) 
-                    ? 'animeil-badge' 
-                    : 'animeil-badge-secondary hover:bg-zinc-600'
-                }`}
+                variant={selectedGenres.includes(genre) ? "default" : "outline"}
+                className="cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900"
                 onClick={() => toggleGenre(genre)}
               >
                 {genre}
@@ -104,46 +98,31 @@ const MangaPage = () => {
           </div>
         </div>
 
-        {/* Results */}
+        {/* Manga Grid */}
         {isLoading ? (
-          <div className="animeil-grid">
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="animeil-card animeil-pulse">
-                <div className="aspect-[3/4] bg-zinc-800 mb-3"></div>
-                <div className="p-3">
-                  <div className="h-4 bg-zinc-800 rounded mb-2"></div>
-                  <div className="h-3 bg-zinc-800 rounded w-2/3"></div>
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-muted rounded-lg aspect-[3/4] mb-4"></div>
+                <div className="h-4 bg-muted rounded mb-2"></div>
+                <div className="h-3 bg-muted rounded w-2/3"></div>
               </div>
             ))}
           </div>
         ) : filteredManga && filteredManga.length > 0 ? (
-          <>
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-zinc-400">
-                Showing {filteredManga.length} manga{filteredManga.length !== 1 ? 's' : ''}
-              </p>
-              <div className="flex items-center space-x-2 text-zinc-400">
-                <Star className="h-4 w-4" />
-                <span className="text-sm">Sorted by rating</span>
-              </div>
-            </div>
-            <div className="animeil-grid">
-              {filteredManga.map((item) => (
-                <MangaCard
-                  key={item.id}
-                  manga={item}
-                  onRead={handleRead}
-                  onFavorite={handleFavorite}
-                />
-              ))}
-            </div>
-          </>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredManga.map((item) => (
+              <MangaCard
+                key={item.id}
+                manga={item}
+                onRead={handleRead}
+                onFavorite={handleFavorite}
+              />
+            ))}
+          </div>
         ) : (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">📚</div>
-            <h3 className="text-2xl font-bold text-white mb-2">No Manga Found</h3>
-            <p className="text-zinc-400 text-lg">Try adjusting your search or filter criteria</p>
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">No manga found matching your criteria.</p>
           </div>
         )}
       </main>
