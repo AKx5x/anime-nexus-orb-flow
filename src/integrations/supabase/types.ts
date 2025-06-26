@@ -63,6 +63,50 @@ export type Database = {
         }
         Relationships: []
       }
+      chapters: {
+        Row: {
+          chapter_number: number
+          created_at: string | null
+          google_drive_link: string | null
+          id: string
+          manga_id: string | null
+          page_count: number | null
+          release_date: string | null
+          thumbnail: string | null
+          title: string
+        }
+        Insert: {
+          chapter_number: number
+          created_at?: string | null
+          google_drive_link?: string | null
+          id?: string
+          manga_id?: string | null
+          page_count?: number | null
+          release_date?: string | null
+          thumbnail?: string | null
+          title: string
+        }
+        Update: {
+          chapter_number?: number
+          created_at?: string | null
+          google_drive_link?: string | null
+          id?: string
+          manga_id?: string | null
+          page_count?: number | null
+          release_date?: string | null
+          thumbnail?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapters_manga_id_fkey"
+            columns: ["manga_id"]
+            isOneToOne: false
+            referencedRelation: "manga"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversations: {
         Row: {
           created_at: string | null
@@ -98,6 +142,63 @@ export type Database = {
             columns: ["participant_two_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      episodes: {
+        Row: {
+          air_date: string | null
+          anime_id: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          episode_number: number
+          google_drive_link: string | null
+          id: string
+          season_id: string | null
+          thumbnail: string | null
+          title: string
+        }
+        Insert: {
+          air_date?: string | null
+          anime_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          episode_number: number
+          google_drive_link?: string | null
+          id?: string
+          season_id?: string | null
+          thumbnail?: string | null
+          title: string
+        }
+        Update: {
+          air_date?: string | null
+          anime_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          episode_number?: number
+          google_drive_link?: string | null
+          id?: string
+          season_id?: string | null
+          thumbnail?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episodes_anime_id_fkey"
+            columns: ["anime_id"]
+            isOneToOne: false
+            referencedRelation: "anime"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "episodes_season_id_fkey"
+            columns: ["season_id"]
+            isOneToOne: false
+            referencedRelation: "seasons"
             referencedColumns: ["id"]
           },
         ]
@@ -321,6 +422,53 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      seasons: {
+        Row: {
+          anime_id: string | null
+          cover_image: string | null
+          created_at: string
+          description: string | null
+          episode_count: number | null
+          id: string
+          release_year: number | null
+          season_number: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          anime_id?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          episode_count?: number | null
+          id?: string
+          release_year?: number | null
+          season_number: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          anime_id?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          episode_count?: number | null
+          id?: string
+          release_year?: number | null
+          season_number?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seasons_anime_id_fkey"
+            columns: ["anime_id"]
+            isOneToOne: false
+            referencedRelation: "anime"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_history: {
         Row: {
