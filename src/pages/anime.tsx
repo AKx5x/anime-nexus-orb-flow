@@ -6,7 +6,7 @@ import AnimeCard from '@/components/ui/anime-card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, Star, Calendar, TrendingUp } from 'lucide-react';
 import { useAnime } from '@/hooks/useAnime';
 import { toast } from 'sonner';
 
@@ -15,7 +15,7 @@ const AnimePage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
-  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Supernatural'];
+  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Supernatural', 'Thriller', 'Horror'];
 
   const filteredAnime = anime?.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,7 +26,7 @@ const AnimePage = () => {
   });
 
   const handleWatch = (id: string) => {
-    toast.success('Redirecting to watch anime...');
+    toast.success('Opening anime player...');
   };
 
   const handleFavorite = (id: string) => {
@@ -43,10 +43,10 @@ const AnimePage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-zinc-900">
         <Header />
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-red-500">Error loading anime: {error.message}</div>
+        <div className="animeil-container py-16">
+          <div className="text-center text-red-400 text-lg">Error loading anime: {error.message}</div>
         </div>
         <Footer />
       </div>
@@ -54,42 +54,48 @@ const AnimePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-zinc-900">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="animeil-container py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Anime Library
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Discover and watch thousands of anime series
+          <div className="flex items-center space-x-3 mb-4">
+            <TrendingUp className="w-8 h-8 text-red-500" />
+            <h1 className="text-4xl font-bold text-white">
+              Anime Library
+            </h1>
+          </div>
+          <p className="text-zinc-400 text-lg">
+            Discover and stream thousands of anime series in HD quality
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-8 space-y-6">
           <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 h-5 w-5" />
             <Input
-              placeholder="Search anime..."
+              placeholder="Search anime titles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="animeil-input pl-10"
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" className="mb-2">
-              <Filter className="h-4 w-4 mr-2" />
-              Genres:
-            </Button>
+          <div className="flex flex-wrap gap-3">
+            <div className="flex items-center space-x-2 text-white">
+              <Filter className="h-5 w-5 text-red-500" />
+              <span className="font-medium">Genres:</span>
+            </div>
             {genres.map(genre => (
               <Badge
                 key={genre}
-                variant={selectedGenres.includes(genre) ? "default" : "outline"}
-                className="cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900"
+                className={`cursor-pointer transition-all ${
+                  selectedGenres.includes(genre) 
+                    ? 'animeil-badge' 
+                    : 'animeil-badge-secondary hover:bg-zinc-600'
+                }`}
                 onClick={() => toggleGenre(genre)}
               >
                 {genre}
@@ -98,31 +104,46 @@ const AnimePage = () => {
           </div>
         </div>
 
-        {/* Anime Grid */}
+        {/* Results */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-muted rounded-lg aspect-[3/4] mb-4"></div>
-                <div className="h-4 bg-muted rounded mb-2"></div>
-                <div className="h-3 bg-muted rounded w-2/3"></div>
+          <div className="animeil-grid">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="animeil-card animeil-pulse">
+                <div className="aspect-[3/4] bg-zinc-800 mb-3"></div>
+                <div className="p-3">
+                  <div className="h-4 bg-zinc-800 rounded mb-2"></div>
+                  <div className="h-3 bg-zinc-800 rounded w-2/3"></div>
+                </div>
               </div>
             ))}
           </div>
         ) : filteredAnime && filteredAnime.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {filteredAnime.map((item) => (
-              <AnimeCard
-                key={item.id}
-                anime={item}
-                onWatch={handleWatch}
-                onFavorite={handleFavorite}
-              />
-            ))}
-          </div>
+          <>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-zinc-400">
+                Showing {filteredAnime.length} anime{filteredAnime.length !== 1 ? 's' : ''}
+              </p>
+              <div className="flex items-center space-x-2 text-zinc-400">
+                <Star className="h-4 w-4" />
+                <span className="text-sm">Sorted by rating</span>
+              </div>
+            </div>
+            <div className="animeil-grid">
+              {filteredAnime.map((item) => (
+                <AnimeCard
+                  key={item.id}
+                  anime={item}
+                  onWatch={handleWatch}
+                  onFavorite={handleFavorite}
+                />
+              ))}
+            </div>
+          </>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No anime found matching your criteria.</p>
+          <div className="text-center py-16">
+            <div className="text-6xl mb-4">🔍</div>
+            <h3 className="text-2xl font-bold text-white mb-2">No Anime Found</h3>
+            <p className="text-zinc-400 text-lg">Try adjusting your search or filter criteria</p>
           </div>
         )}
       </main>
