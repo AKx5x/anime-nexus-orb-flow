@@ -8,8 +8,10 @@ import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import AnimePage from "./pages/anime";
+import AnimeWatch from "./pages/AnimeWatch";
 import MangaPage from "./pages/manga";
 import NewsPage from "./pages/news";
+import NewsDetail from "./pages/NewsDetail";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
@@ -28,8 +30,10 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/anime" element={<AnimePage />} />
+              <Route path="/anime/watch/:animeId" element={<AnimeWatch />} />
               <Route path="/manga" element={<MangaPage />} />
               <Route path="/news" element={<NewsPage />} />
+              <Route path="/news/:slug" element={<NewsDetail />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/admin" element={<Admin />} />
