@@ -272,7 +272,7 @@
 
   /* Professional feature cards */
   .feature-card {
-    @apply brown-glass-card p-8 text-center group cursor-pointer;
+    @apply brown-glass-card p-8 text-center cursor-pointer;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -290,7 +290,7 @@
 
   /* News and content cards */
   .news-card-brown {
-    @apply brown-glass-card overflow-hidden group cursor-pointer;
+    @apply brown-glass-card overflow-hidden cursor-pointer;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
