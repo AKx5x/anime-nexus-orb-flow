@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,16 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom brown anime theme colors
+				'brown-primary': 'hsl(35, 65%, 45%)',
+				'brown-secondary': 'hsl(25, 45%, 35%)',
+				'brown-accent': 'hsl(45, 55%, 55%)',
+				'brown-dark': 'hsl(25, 20%, 8%)',
+				'brown-light': 'hsl(35, 35%, 85%)',
+				'copper': 'hsl(15, 70%, 50%)',
+				'bronze': 'hsl(30, 60%, 40%)',
+				'gold': 'hsl(45, 85%, 55%)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
