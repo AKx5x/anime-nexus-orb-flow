@@ -63,15 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom brown anime theme colors
-				'brown-primary': 'hsl(35, 65%, 45%)',
-				'brown-secondary': 'hsl(25, 45%, 35%)',
-				'brown-accent': 'hsl(45, 55%, 55%)',
-				'brown-dark': 'hsl(25, 20%, 8%)',
-				'brown-light': 'hsl(35, 35%, 85%)',
-				'copper': 'hsl(15, 70%, 50%)',
-				'bronze': 'hsl(30, 60%, 40%)',
-				'gold': 'hsl(45, 85%, 55%)'
+				// Clean white & red theme colors
+				'red-primary': 'hsl(0, 84%, 60%)',
+				'red-dark': 'hsl(0, 84%, 50%)',
+				'red-light': 'hsl(0, 84%, 90%)',
+				'grey-light': 'hsl(0, 0%, 85%)',
+				'grey-medium': 'hsl(0, 0%, 45%)',
+				'grey-dark': 'hsl(0, 0%, 25%)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

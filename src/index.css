@@ -3,72 +3,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Brown Anime Theme - Completely Redesigned */
+/* Clean White & Red Theme - Inspired by animeil-tv.com */
 
 @layer base {
   :root {
-    /* Brown anime color palette */
-    --background: 25 20% 8%;
-    --foreground: 35 25% 95%;
+    /* Clean white & red color palette */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
-    --card: 30 15% 12%;
-    --card-foreground: 35 25% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 30 15% 12%;
-    --popover-foreground: 35 25% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 35 65% 45%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 20% 18%;
-    --secondary-foreground: 35 25% 95%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 30 20% 15%;
-    --muted-foreground: 35 15% 65%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 35 65% 45%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 30 20% 20%;
-    --input: 30 15% 15%;
-    --ring: 35 65% 45%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 0 84% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Custom brown anime variables */
-    --brown-primary: 35 65% 45%;
-    --brown-secondary: 25 45% 35%;
-    --brown-accent: 45 55% 55%;
-    --brown-dark: 25 20% 8%;
-    --brown-light: 35 35% 85%;
-    --copper: 15 70% 50%;
-    --bronze: 30 60% 40%;
-    --gold: 45 85% 55%;
+    /* Custom red theme variables */
+    --red-primary: 0 84% 60%;
+    --red-dark: 0 84% 50%;
+    --red-light: 0 84% 90%;
+    --grey-light: 0 0% 85%;
+    --grey-medium: 0 0% 45%;
+    --grey-dark: 0 0% 25%;
   }
 
   .dark {
-    --background: 25 20% 8%;
-    --foreground: 35 25% 95%;
-    --card: 30 15% 12%;
-    --card-foreground: 35 25% 95%;
-    --popover: 30 15% 12%;
-    --popover-foreground: 35 25% 95%;
-    --primary: 35 65% 45%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 30 20% 18%;
-    --secondary-foreground: 35 25% 95%;
-    --muted: 30 20% 15%;
-    --muted-foreground: 35 15% 65%;
-    --accent: 35 65% 45%;
-    --accent-foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 84% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 84% 60%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 30 20% 20%;
-    --input: 30 15% 15%;
-    --ring: 35 65% 45%;
+    --border: 0 0% 90%;
+    --input: 0 0% 96%;
+    --ring: 0 84% 60%;
   }
 }
 
@@ -78,372 +76,167 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', 'Noto Sans JP', 'Hiragino Sans', sans-serif;
-    background: 
-      radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(160, 82, 45, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 40% 40%, rgba(210, 180, 140, 0.08) 0%, transparent 50%),
-      linear-gradient(135deg, 
-        hsl(25, 20%, 8%) 0%, 
-        hsl(30, 15%, 10%) 25%,
-        hsl(35, 18%, 12%) 50%,
-        hsl(30, 15%, 10%) 75%,
-        hsl(25, 20%, 8%) 100%);
-    background-attachment: fixed;
+    @apply bg-white text-black;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    background: white;
     min-height: 100vh;
-    overflow-x: hidden;
+    line-height: 1.6;
   }
 
-  /* Enhanced scrollbar with brown theme */
+  /* Clean scrollbar */
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(139, 69, 19, 0.1);
-    border-radius: 6px;
+    background: #f1f1f1;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, 
-      hsl(35, 65%, 45%) 0%, 
-      hsl(25, 45%, 35%) 50%, 
-      hsl(35, 65%, 45%) 100%);
-    border-radius: 6px;
-    border: 2px solid rgba(139, 69, 19, 0.1);
+    background: hsl(0, 84%, 60%);
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, 
-      hsl(35, 75%, 55%) 0%, 
-      hsl(25, 55%, 45%) 50%, 
-      hsl(35, 75%, 55%) 100%);
+    background: hsl(0, 84%, 50%);
   }
 
   ::selection {
-    background: linear-gradient(135deg, hsl(35, 65%, 45%) 0%, hsl(45, 55%, 55%) 100%);
-    color: white;
+    background: hsl(0, 84%, 90%);
+    color: hsl(0, 0%, 0%);
   }
 }
 
 @layer components {
-  /* Brown anime gradient backgrounds */
-  .brown-anime-gradient {
-    background: linear-gradient(135deg, 
-      hsl(35, 65%, 45%) 0%, 
-      hsl(25, 45%, 35%) 35%, 
-      hsl(45, 55%, 55%) 70%, 
-      hsl(35, 65%, 45%) 100%);
+  /* Red accent backgrounds */
+  .red-banner {
+    background: hsl(0, 84%, 60%);
+    color: white;
   }
 
-  .brown-anime-text {
-    background: linear-gradient(135deg, 
-      hsl(35, 75%, 65%) 0%, 
-      hsl(45, 65%, 70%) 35%, 
-      hsl(25, 55%, 60%) 70%, 
-      hsl(35, 75%, 65%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 0 30px rgba(210, 180, 140, 0.5);
+  .red-accent-text {
+    color: hsl(0, 84%, 60%);
   }
 
-  /* Professional anime streaming cards */
-  .anime-card-brown {
-    @apply relative overflow-hidden transition-all duration-700 hover:scale-[1.08] hover:-translate-y-3;
-    background: linear-gradient(145deg, 
-      rgba(139, 69, 19, 0.15) 0%, 
-      rgba(160, 82, 45, 0.08) 50%,
-      rgba(210, 180, 140, 0.05) 100%);
-    border: 1px solid rgba(210, 180, 140, 0.2);
-    box-shadow: 
-      0 10px 40px rgba(139, 69, 19, 0.3),
-      0 4px 12px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(210, 180, 140, 0.1);
-    backdrop-filter: blur(20px);
-    border-radius: 16px;
+  /* Clean anime cards */
+  .anime-card-clean {
+    @apply bg-white border border-gray-200 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-red-500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .anime-card-brown:hover {
-    border-color: rgba(210, 180, 140, 0.4);
-    box-shadow: 
-      0 25px 80px rgba(210, 180, 140, 0.4),
-      0 15px 50px rgba(139, 69, 19, 0.5),
-      0 0 0 1px rgba(210, 180, 140, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  }
-
-  /* Professional brown button styling */
-  .brown-anime-button {
-    @apply relative overflow-hidden font-bold tracking-wide;
-    background: linear-gradient(135deg, 
-      hsl(35, 65%, 45%) 0%, 
-      hsl(25, 45%, 35%) 50%, 
-      hsl(45, 55%, 55%) 100%);
-    box-shadow: 
-      0 6px 25px rgba(210, 180, 140, 0.4),
-      0 3px 10px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 12px;
-  }
-
-  .brown-anime-button:hover {
-    box-shadow: 
-      0 12px 50px rgba(210, 180, 140, 0.6),
-      0 6px 20px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px) scale(1.02);
-  }
-
-  .brown-anime-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.4), 
-      transparent);
-    transition: left 0.8s;
-  }
-
-  .brown-anime-button:hover::before {
-    left: 100%;
-  }
-
-  /* Enhanced glass morphism with brown theme */
-  .brown-glass-card {
-    background: rgba(139, 69, 19, 0.08);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(210, 180, 140, 0.15);
-    box-shadow: 
-      0 12px 40px rgba(139, 69, 19, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(210, 180, 140, 0.1);
-    transition: all 0.4s ease;
-    border-radius: 20px;
-  }
-
-  .brown-glass-card:hover {
-    border-color: rgba(210, 180, 140, 0.3);
-    box-shadow: 
-      0 20px 60px rgba(210, 180, 140, 0.3),
-      0 12px 40px rgba(139, 69, 19, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  .anime-card-clean:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
 
-  /* Professional navigation with brown theme */
-  .brown-anime-nav {
-    @apply backdrop-blur-xl;
-    background: rgba(25, 20, 15, 0.95);
-    border-bottom: 1px solid rgba(210, 180, 140, 0.3);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+  /* Clean buttons */
+  .btn-red {
+    @apply bg-red-500 text-white px-6 py-2 rounded font-medium transition-colors hover:bg-red-600;
   }
 
-  /* Enhanced form inputs with brown theme */
-  .brown-anime-input {
-    @apply bg-white/5 border-brown-light/20 focus:border-primary/60 focus:ring-primary/30;
-    backdrop-filter: blur(15px);
-    transition: all 0.4s ease;
-    border-radius: 12px;
+  .btn-transparent {
+    @apply bg-transparent text-black border border-gray-300 px-6 py-2 rounded font-medium transition-colors hover:bg-gray-50;
   }
 
-  .brown-anime-input:focus {
-    box-shadow: 0 0 0 4px rgba(210, 180, 140, 0.1);
-    background: rgba(139, 69, 19, 0.05);
-  }
-
-  /* Typography enhancements */
-  .brown-anime-title {
-    @apply text-4xl md:text-7xl font-black brown-anime-text;
-    text-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  /* Clean typography */
+  .title-main {
+    @apply text-4xl md:text-6xl font-black text-black mb-6;
     letter-spacing: -0.02em;
   }
 
-  .brown-anime-subtitle {
-    @apply text-lg md:text-2xl text-brown-light/90;
-    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  .title-section {
+    @apply text-2xl md:text-3xl font-bold text-black mb-4;
   }
 
-  /* Professional feature cards */
-  .feature-card {
-    @apply brown-glass-card p-8 text-center cursor-pointer;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  .subtitle {
+    @apply text-lg text-gray-600 mb-8;
   }
 
-  .feature-card:hover {
-    transform: translateY(-8px) scale(1.03);
+  /* Age rating badges */
+  .age-badge {
+    @apply bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs font-medium;
   }
 
-  .feature-card .feature-icon {
-    @apply w-16 h-16 mx-auto mb-6 text-primary transition-all duration-500;
+  /* Navigation styles */
+  .nav-link {
+    @apply text-black hover:text-red-500 transition-colors font-medium;
   }
 
-  .feature-card:hover .feature-icon {
-    transform: scale(1.2) rotate(5deg);
+  .nav-link.active {
+    @apply text-red-500;
   }
 
-  /* News and content cards */
-  .news-card-brown {
-    @apply brown-glass-card overflow-hidden cursor-pointer;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Grid layouts */
+  .anime-grid {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4;
   }
 
-  .news-card-brown:hover {
-    transform: translateY(-6px) scale(1.02);
+  .manga-grid {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-8 gap-4;
   }
 
-  /* Trending animations */
-  .trending-badge-brown {
-    background: linear-gradient(135deg, 
-      hsl(15, 70%, 50%) 0%, 
-      hsl(45, 55%, 55%) 50%, 
-      hsl(15, 70%, 50%) 100%);
-    box-shadow: 0 0 30px rgba(255, 140, 0, 0.5);
-    animation: trending-pulse-brown 2.5s ease-in-out infinite;
+  /* Clean cards */
+  .clean-card {
+    @apply bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow;
   }
 
-  @keyframes trending-pulse-brown {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.08);
-      opacity: 0.85;
-    }
+  /* News cards */
+  .news-card {
+    @apply bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer;
   }
 
-  /* Loading animations with brown theme */
-  .brown-anime-pulse {
-    animation: brown-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  .news-card:hover {
+    transform: translateY(-2px);
+    border-color: hsl(0, 84%, 60%);
   }
 
-  @keyframes brown-pulse {
-    0%, 100% {
-      opacity: 1;
-      background-color: rgba(139, 69, 19, 0.1);
-    }
-    50% {
-      opacity: 0.6;
-      background-color: rgba(210, 180, 140, 0.15);
-    }
+  /* Search and filter containers */
+  .search-container {
+    @apply bg-white border border-gray-200 rounded-lg p-6 shadow-sm;
   }
 
-  /* Floating animations */
-  .brown-anime-float {
-    animation: brown-float 8s ease-in-out infinite;
-  }
-
-  @keyframes brown-float {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    33% {
-      transform: translateY(-15px) rotate(1deg);
-    }
-    66% {
-      transform: translateY(-8px) rotate(-1deg);
-    }
-  }
-
-  /* Professional video player */
-  .brown-video-player {
-    background: linear-gradient(145deg, 
-      rgba(0, 0, 0, 0.95) 0%, 
-      rgba(139, 69, 19, 0.1) 100%);
-    border: 1px solid rgba(210, 180, 140, 0.2);
-    box-shadow: 
-      0 25px 80px rgba(0, 0, 0, 0.7),
-      0 10px 40px rgba(139, 69, 19, 0.3);
-    border-radius: 20px;
-  }
-
-  /* Notification styles */
-  .notification-brown {
-    background: rgba(139, 69, 19, 0.1);
-    border: 1px solid rgba(210, 180, 140, 0.3);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Search and filter enhancements */
-  .search-container-brown {
-    @apply brown-glass-card p-6;
-    background: rgba(139, 69, 19, 0.05);
-  }
-
-  /* Stats section styling */
+  /* Stats cards */
   .stats-card {
-    @apply brown-glass-card text-center p-8;
-    transition: all 0.5s ease;
-  }
-
-  .stats-card:hover {
-    transform: translateY(-5px) scale(1.05);
+    @apply clean-card text-center;
   }
 
   .stats-number {
-    @apply text-4xl md:text-5xl font-black brown-anime-text;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    @apply text-4xl md:text-5xl font-black text-red-500 mb-2;
   }
 
-  /* Enhanced hero section */
-  .hero-background-brown {
-    background: 
-      radial-gradient(circle at 30% 20%, rgba(210, 180, 140, 0.15) 0%, transparent 50%),
-      radial-gradient(circle at 70% 80%, rgba(139, 69, 19, 0.15) 0%, transparent 50%),
-      linear-gradient(135deg,
-        rgba(25, 20, 15, 0.9) 0%,
-        rgba(139, 69, 19, 0.1) 50%,
-        rgba(25, 20, 15, 0.9) 100%);
+  /* Genre badges */
+  .genre-badge {
+    @apply bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors cursor-pointer;
   }
 
-  /* Rating and genre badges */
-  .rating-badge-brown {
-    background: linear-gradient(135deg, 
-      hsl(45, 85%, 55%) 0%, 
-      hsl(35, 75%, 50%) 100%);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  .genre-badge.selected {
+    @apply bg-red-500 text-white hover:bg-red-600;
   }
 
-  .genre-badge-brown {
-    background: rgba(139, 69, 19, 0.2);
-    border: 1px solid rgba(210, 180, 140, 0.3);
-    backdrop-filter: blur(10px);
+  /* Rating badges */
+  .rating-badge {
+    @apply bg-yellow-400 text-black px-2 py-1 rounded text-sm font-bold;
   }
 
-  .genre-badge-brown:hover {
-    background: rgba(210, 180, 140, 0.2);
-    border-color: rgba(210, 180, 140, 0.5);
-  }
-}
-
-/* Professional media queries */
-@media (max-width: 768px) {
-  .brown-anime-title {
-    @apply text-2xl md:text-4xl;
-  }
-  
-  .anime-card-brown {
-    @apply hover:scale-[1.03];
+  /* Status badges */
+  .status-ongoing {
+    @apply bg-green-500 text-white px-2 py-1 rounded text-xs font-medium;
   }
 
-  .feature-card:hover {
-    transform: translateY(-4px) scale(1.01);
+  .status-completed {
+    @apply bg-blue-500 text-white px-2 py-1 rounded text-xs font-medium;
+  }
+
+  .status-upcoming {
+    @apply bg-orange-500 text-white px-2 py-1 rounded text-xs font-medium;
   }
 }
 
 /* Focus improvements for accessibility */
 :focus-visible {
-  outline: 3px solid hsl(35, 65%, 45%);
-  outline-offset: 3px;
-  border-radius: 6px;
+  outline: 2px solid hsl(0, 84%, 60%);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Smooth scrolling */
@@ -457,36 +250,81 @@ button:focus {
 }
 
 button:focus-visible {
-  outline: 3px solid hsl(35, 65%, 45%);
-  outline-offset: 3px;
+  outline: 2px solid hsl(0, 84%, 60%);
+  outline-offset: 2px;
 }
 
-/* Custom selection for better UX */
-*::selection {
-  background: rgba(210, 180, 140, 0.3);
-  color: hsl(35, 25%, 95%);
+/* Loading animations */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Enhanced animations for better user experience */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
+@keyframes pulse {
+  0%, 100% {
     opacity: 1;
-    transform: translateY(0);
+    background-color: #f3f4f6;
+  }
+  50% {
+    opacity: 0.7;
+    background-color: #e5e7eb;
   }
 }
 
-.slide-in-up {
-  animation: slideInUp 0.6s ease-out forwards;
+/* Trending animations */
+.trending-badge {
+  background: linear-gradient(135deg, hsl(0, 84%, 60%) 0%, hsl(0, 84%, 50%) 100%);
+  animation: trending-pulse 2s ease-in-out infinite;
 }
 
-/* Stagger animation delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-.stagger-6 { animation-delay: 0.6s; }
+@keyframes trending-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .title-main {
+    @apply text-2xl md:text-4xl;
+  }
+  
+  .anime-grid {
+    @apply grid-cols-2 sm:grid-cols-3;
+  }
+
+  .manga-grid {
+    @apply grid-cols-2 sm:grid-cols-4;
+  }
+}
+
+/* Clean, minimal design principles */
+.minimal-spacing {
+  @apply space-y-8;
+}
+
+.content-container {
+  @apply max-w-7xl mx-auto px-4 py-8;
+}
+
+.section-header {
+  @apply flex items-center justify-between mb-8;
+}
+
+.divider {
+  @apply border-t border-gray-200 my-8;
+}

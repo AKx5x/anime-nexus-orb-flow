@@ -5,11 +5,9 @@ import Footer from '@/components/layout/Footer';
 import AnimeCard from '@/components/ui/anime-card';
 import AdvancedSearch from '@/components/ui/AdvancedSearch';
 import GenreFilter from '@/components/ui/GenreFilter';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Grid, List, Filter, SortAsc, Play, TrendingUp } from 'lucide-react';
-import { useManga } from '@/hooks/useManga';
 import { useAnime } from '@/hooks/useAnime';
 import { toast } from 'sonner';
 
@@ -43,7 +41,7 @@ const AnimePage = () => {
     }
   });
 
-  const handleRead = (id: string) => {
+  const handleWatch = (id: string) => {
     toast.success('Starting anime...');
   };
 
@@ -76,14 +74,14 @@ const AnimePage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-white">
         <Header />
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center">
-            <div className="brown-glass-card p-8 max-w-md mx-auto">
-              <h2 className="text-2xl font-bold text-destructive mb-4">Oops! Something went wrong</h2>
-              <p className="text-muted-foreground mb-6">We couldn't load the anime collection. Please try again later.</p>
-              <Button onClick={() => window.location.reload()} className="brown-anime-button">
+        <div className="content-container">
+          <div className="text-center py-20">
+            <div className="clean-card max-w-md mx-auto">
+              <h2 className="text-2xl font-bold text-red-500 mb-4">Oops! Something went wrong</h2>
+              <p className="text-gray-600 mb-6">We couldn't load the anime collection. Please try again later.</p>
+              <Button onClick={() => window.location.reload()} className="btn-red">
                 Try Again
               </Button>
             </div>
@@ -95,16 +93,16 @@ const AnimePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="content-container">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="brown-anime-title mb-6">
+        <div className="text-center mb-12 py-8">
+          <h1 className="title-main">
             Anime Collection
           </h1>
-          <p className="brown-anime-subtitle max-w-3xl mx-auto">
+          <p className="subtitle max-w-3xl mx-auto">
             Discover thousands of anime series from classic masterpieces to the latest seasonal releases. 
             Your next favorite anime adventure awaits.
           </p>
@@ -122,12 +120,12 @@ const AnimePage = () => {
         />
 
         {/* Toolbar */}
-        <div className="brown-glass-card p-4 mb-8">
+        <div className="search-container mb-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
-                <Filter className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium">Status:</span>
+                <Filter className="w-4 h-4 text-gray-500" />
+                <span className="text-sm font-medium text-black">Status:</span>
                 <Select value={filterStatus} onValueChange={setFilterStatus}>
                   <SelectTrigger className="w-32">
                     <SelectValue />
@@ -142,8 +140,8 @@ const AnimePage = () => {
               </div>
 
               <div className="flex items-center space-x-2">
-                <SortAsc className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium">Sort:</span>
+                <SortAsc className="w-4 h-4 text-gray-500" />
+                <span className="text-sm font-medium text-black">Sort:</span>
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-32">
                     <SelectValue />
@@ -159,10 +157,10 @@ const AnimePage = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-gray-500">
                 {filteredAnime?.length || 0} results
               </span>
-              <div className="flex items-center space-x-1 border border-border rounded-lg p-1">
+              <div className="flex items-center space-x-1 border border-gray-200 rounded-lg p-1">
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'ghost'}
                   size="sm"
@@ -186,21 +184,18 @@ const AnimePage = () => {
 
         {/* Results */}
         {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+          <div className="anime-grid">
             {Array.from({ length: 12 }).map((_, i) => (
-              <div key={i} className="brown-anime-pulse rounded-xl aspect-[3/4] mb-4"></div>
+              <div key={i} className="loading-pulse rounded-lg aspect-[3/4] mb-4"></div>
             ))}
           </div>
         ) : filteredAnime && filteredAnime.length > 0 ? (
-          <div className={viewMode === 'grid' 
-            ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6" 
-            : "space-y-4"
-          }>
+          <div className={viewMode === 'grid' ? "anime-grid" : "space-y-4"}>
             {filteredAnime.map((item, index) => (
               <AnimeCard
                 key={item.id}
                 anime={item}
-                onWatch={handleRead}
+                onWatch={handleWatch}
                 onFavorite={handleFavorite}
                 showRank={sortBy === 'popularity' || sortBy === 'rating'}
                 rank={index + 1}
@@ -209,13 +204,13 @@ const AnimePage = () => {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="brown-glass-card p-12 max-w-md mx-auto">
-              <TrendingUp className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
-              <h3 className="text-2xl font-bold text-foreground mb-4">No anime found</h3>
-              <p className="text-muted-foreground mb-6">
+            <div className="clean-card max-w-md mx-auto">
+              <TrendingUp className="w-16 h-16 text-gray-400 mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-black mb-4">No anime found</h3>
+              <p className="text-gray-600 mb-6">
                 Try adjusting your search criteria or browse our popular titles.
               </p>
-              <Button onClick={handleReset} className="brown-anime-button">
+              <Button onClick={handleReset} className="btn-red">
                 <Play className="w-4 h-4 mr-2" />
                 Browse All Anime
               </Button>
