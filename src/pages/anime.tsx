@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AnimeCard from '@/components/ui/anime-card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import AdvancedSearch from '@/components/ui/AdvancedSearch';
+import GenreFilter from '@/components/ui/GenreFilter';
 import { Badge } from '@/components/ui/badge';
-import { Search, Filter } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Grid, List, Filter, SortAsc, Play, TrendingUp } from 'lucide-react';
+import { useManga } from '@/hooks/useManga';
 import { useAnime } from '@/hooks/useAnime';
 import { toast } from 'sonner';
 
@@ -14,19 +17,34 @@ const AnimePage = () => {
   const { data: anime, isLoading, error } = useAnime();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState('popularity');
+  const [filterStatus, setFilterStatus] = useState('all');
 
-  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Supernatural'];
+  const genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Supernatural', 'Thriller', 'Mystery'];
 
   const filteredAnime = anime?.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          item.title_english?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesGenres = selectedGenres.length === 0 || 
                          selectedGenres.some(genre => item.genres?.includes(genre));
-    return matchesSearch && matchesGenres;
+    const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
+    return matchesSearch && matchesGenres && matchesStatus;
+  })?.sort((a, b) => {
+    switch (sortBy) {
+      case 'rating':
+        return (b.rating || 0) - (a.rating || 0);
+      case 'newest':
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      case 'title':
+        return a.title.localeCompare(b.title);
+      default:
+        return (b.rating || 0) - (a.rating || 0);
+    }
   });
 
-  const handleWatch = (id: string) => {
-    toast.success('Redirecting to watch anime...');
+  const handleRead = (id: string) => {
+    toast.success('Starting anime...');
   };
 
   const handleFavorite = (id: string) => {
@@ -41,12 +59,35 @@ const AnimePage = () => {
     );
   };
 
+  const handleSearch = (filters: any) => {
+    setSearchTerm(filters.query);
+    setSelectedGenres(filters.genres);
+    setSortBy(filters.sortBy);
+    toast.success('Search filters applied!');
+  };
+
+  const handleReset = () => {
+    setSearchTerm('');
+    setSelectedGenres([]);
+    setSortBy('popularity');
+    setFilterStatus('all');
+    toast.success('Filters reset!');
+  };
+
   if (error) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-red-500">Error loading anime: {error.message}</div>
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <div className="brown-glass-card p-8 max-w-md mx-auto">
+              <h2 className="text-2xl font-bold text-destructive mb-4">Oops! Something went wrong</h2>
+              <p className="text-muted-foreground mb-6">We couldn't load the anime collection. Please try again later.</p>
+              <Button onClick={() => window.location.reload()} className="brown-anime-button">
+                Try Again
+              </Button>
+            </div>
+          </div>
         </div>
         <Footer />
       </div>
@@ -59,70 +100,126 @@ const AnimePage = () => {
       
       <main className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Anime Library
+        <div className="mb-12 text-center">
+          <h1 className="brown-anime-title mb-6">
+            Anime Collection
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Discover and watch thousands of anime series
+          <p className="brown-anime-subtitle max-w-3xl mx-auto">
+            Discover thousands of anime series from classic masterpieces to the latest seasonal releases. 
+            Your next favorite anime adventure awaits.
           </p>
         </div>
 
-        {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search anime..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
+        {/* Advanced Search */}
+        <AdvancedSearch onSearch={handleSearch} onReset={handleReset} />
 
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" className="mb-2">
-              <Filter className="h-4 w-4 mr-2" />
-              Genres:
-            </Button>
-            {genres.map(genre => (
-              <Badge
-                key={genre}
-                variant={selectedGenres.includes(genre) ? "default" : "outline"}
-                className="cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900"
-                onClick={() => toggleGenre(genre)}
-              >
-                {genre}
-              </Badge>
-            ))}
+        {/* Genre Filter */}
+        <GenreFilter 
+          genres={genres}
+          selectedGenres={selectedGenres}
+          onGenreToggle={toggleGenre}
+          onClearAll={() => setSelectedGenres([])}
+        />
+
+        {/* Toolbar */}
+        <div className="brown-glass-card p-4 mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Filter className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Status:</span>
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Status</SelectItem>
+                    <SelectItem value="ongoing">Ongoing</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="upcoming">Upcoming</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <SortAsc className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium">Sort:</span>
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="popularity">Popular</SelectItem>
+                    <SelectItem value="rating">Rating</SelectItem>
+                    <SelectItem value="newest">Newest</SelectItem>
+                    <SelectItem value="title">A-Z</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <span className="text-sm text-muted-foreground">
+                {filteredAnime?.length || 0} results
+              </span>
+              <div className="flex items-center space-x-1 border border-border rounded-lg p-1">
+                <Button
+                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('grid')}
+                  className="p-2"
+                >
+                  <Grid className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('list')}
+                  className="p-2"
+                >
+                  <List className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Anime Grid */}
+        {/* Results */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="bg-muted rounded-lg aspect-[3/4] mb-4"></div>
-                <div className="h-4 bg-muted rounded mb-2"></div>
-                <div className="h-3 bg-muted rounded w-2/3"></div>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div key={i} className="brown-anime-pulse rounded-xl aspect-[3/4] mb-4"></div>
             ))}
           </div>
         ) : filteredAnime && filteredAnime.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {filteredAnime.map((item) => (
+          <div className={viewMode === 'grid' 
+            ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6" 
+            : "space-y-4"
+          }>
+            {filteredAnime.map((item, index) => (
               <AnimeCard
                 key={item.id}
                 anime={item}
-                onWatch={handleWatch}
+                onWatch={handleRead}
                 onFavorite={handleFavorite}
+                showRank={sortBy === 'popularity' || sortBy === 'rating'}
+                rank={index + 1}
               />
             ))}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">No anime found matching your criteria.</p>
+          <div className="text-center py-20">
+            <div className="brown-glass-card p-12 max-w-md mx-auto">
+              <TrendingUp className="w-16 h-16 text-muted-foreground mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-foreground mb-4">No anime found</h3>
+              <p className="text-muted-foreground mb-6">
+                Try adjusting your search criteria or browse our popular titles.
+              </p>
+              <Button onClick={handleReset} className="brown-anime-button">
+                <Play className="w-4 h-4 mr-2" />
+                Browse All Anime
+              </Button>
+            </div>
           </div>
         )}
       </main>
