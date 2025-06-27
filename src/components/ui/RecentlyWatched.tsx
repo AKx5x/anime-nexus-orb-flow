@@ -96,7 +96,7 @@ const RecentlyWatched = ({ items = [] }: RecentlyWatchedProps) => {
                   {item.title}
                 </h4>
                 <div className="flex items-center space-x-2 mt-1">
-                  <Badge variant="outline" size="sm" className="genre-badge-brown">
+                  <Badge variant="outline" className="genre-badge-brown">
                     {item.type === 'anime' ? `Episode ${item.episode}` : `Chapter ${item.chapter}`}
                   </Badge>
                   <span className="text-xs text-muted-foreground">

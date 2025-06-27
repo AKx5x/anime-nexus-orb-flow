@@ -12,7 +12,7 @@ import RecentlyWatched from '@/components/ui/RecentlyWatched';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Play, TrendingUp, Star, Clock, ArrowRight, Zap, Fire, BookOpen, Users } from 'lucide-react';
+import { Play, TrendingUp, Star, Clock, ArrowRight, Zap, Flame, BookOpen, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index = () => {
@@ -134,7 +134,7 @@ const Index = () => {
               </div>
               <div className="brown-glass-card p-6">
                 <h3 className="text-xl font-bold mb-4 flex items-center">
-                  <Fire className="w-5 h-5 mr-2 text-orange-500" />
+                  <Flame className="w-5 h-5 mr-2 text-orange-500" />
                   Quick Actions
                 </h3>
                 <div className="space-y-3">
@@ -176,7 +176,7 @@ const Index = () => {
                 <TrendingUp className="w-8 h-8 text-primary" />
                 <h2 className="text-4xl font-black text-foreground">Trending Now</h2>
                 <Badge className="trending-badge-brown text-white font-bold px-4 py-2">
-                  <Fire className="w-4 h-4 mr-1" />
+                  <Flame className="w-4 h-4 mr-1" />
                   HOT
                 </Badge>
               </div>
